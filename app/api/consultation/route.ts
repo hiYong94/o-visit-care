@@ -3,7 +3,7 @@ import { yyMmDdToIso } from "@/lib/birthDate";
 import { CONSULTATION_PROGRAM_OPTIONS } from "@/lib/constants";
 import { isValidPhone } from "@/lib/phone";
 import { isDateOnOrAfterToday } from "@/lib/date";
-import { notifyConsultationRequest } from "@/lib/slack/service";
+import { notifyConsultationRequest, notifySubmissionError, buildSubmissionErrorContext } from "@/lib/slack/service";
 import { SlackApiError } from "@/lib/slack/client";
 import type { ConsultationPayload } from "@/lib/types/forms";
 
@@ -56,9 +56,11 @@ function parseBody(body: unknown): ConsultationPayload | null {
 }
 
 export async function POST(request: Request) {
+  let payload: ConsultationPayload | null = null;
+
   try {
     const body = await request.json();
-    const payload = parseBody(body);
+    payload = parseBody(body);
 
     if (!payload) {
       return NextResponse.json(
@@ -72,6 +74,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("Consultation API error:", error);
+
+    await notifySubmissionError(
+      buildSubmissionErrorContext("consultation", error, payload ?? undefined),
+    );
 
     if (error instanceof SlackApiError) {
       return NextResponse.json(

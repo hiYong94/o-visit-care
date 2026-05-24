@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import { yyMmDdToIso } from "@/lib/birthDate";
 import { isValidPhone } from "@/lib/phone";
-import { notifyRecruitmentApplication } from "@/lib/slack/service";
+import {
+  notifyRecruitmentApplication,
+  notifySubmissionError,
+  buildSubmissionErrorContext,
+} from "@/lib/slack/service";
 import { SlackApiError } from "@/lib/slack/client";
 import type { RecruitmentPayload } from "@/lib/types/forms";
 
@@ -46,9 +50,11 @@ function parseBody(body: unknown): RecruitmentPayload | null {
 }
 
 export async function POST(request: Request) {
+  let payload: RecruitmentPayload | null = null;
+
   try {
     const body = await request.json();
-    const payload = parseBody(body);
+    payload = parseBody(body);
 
     if (!payload) {
       return NextResponse.json(
@@ -62,6 +68,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("Recruitment API error:", error);
+
+    await notifySubmissionError(
+      buildSubmissionErrorContext("recruitment", error, payload ?? undefined),
+    );
 
     if (error instanceof SlackApiError) {
       return NextResponse.json(
