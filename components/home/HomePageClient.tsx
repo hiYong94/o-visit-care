@@ -15,6 +15,7 @@ import RecruitmentModal from "@/components/recruitment/RecruitmentModal";
 export default function HomePageClient() {
   const [recruitmentOpen, setRecruitmentOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [recruitmentConfirmOpen, setRecruitmentConfirmOpen] = useState(false);
   const [phoneFormOpen, setPhoneFormOpen] = useState(false);
 
   return (
@@ -40,12 +41,21 @@ export default function HomePageClient() {
       <RecruitmentModal
         open={recruitmentOpen}
         onClose={() => setRecruitmentOpen(false)}
+        onSuccess={() => setRecruitmentConfirmOpen(true)}
       />
       <ConfirmModal
         open={confirmOpen}
         title="상담 신청 완료"
         message={"상담 신청이 접수되었습니다.\n빠른 시일 내에 연락드리겠습니다."}
         onClose={() => setConfirmOpen(false)}
+      />
+      <ConfirmModal
+        open={recruitmentConfirmOpen}
+        title="지원서 접수 완료"
+        message={
+          "지원서가 접수되었습니다.\n담당자가 검토 후 연락드리겠습니다.\n감사합니다."
+        }
+        onClose={() => setRecruitmentConfirmOpen(false)}
       />
     </>
   );

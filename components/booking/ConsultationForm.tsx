@@ -9,8 +9,10 @@ import {
   selectClassName,
   textareaClassName,
 } from "@/components/ui/formStyles";
+import { submitConsultation } from "@/lib/api/forms";
 import { validateYyMmDd, yyMmDdToIso } from "@/lib/birthDate";
 import { CALL_TIME_OPTIONS, PROGRAMS } from "@/lib/constants";
+import { ApiError } from "@/lib/api/client";
 
 type ConsultationFormProps = {
   onCancel: () => void;
@@ -24,15 +26,19 @@ export default function ConsultationForm({
   const formRef = useRef<HTMLFormElement>(null);
   const [birthDate, setBirthDate] = useState("");
   const [birthDateError, setBirthDateError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const resetForm = () => {
     formRef.current?.reset();
     setBirthDate("");
     setBirthDateError(null);
+    setSubmitError(null);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitError(null);
 
     const birthError = validateYyMmDd(birthDate);
     if (birthError) {
@@ -43,16 +49,32 @@ export default function ConsultationForm({
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
 
-    const { patient_birthdate_yymmdd: _raw, ...rest } = data;
+    setIsSubmitting(true);
+    try {
+      await submitConsultation({
+        name: String(data.name),
+        phone: String(data.phone),
+        patientGender: String(data.patient_gender),
+        patientBirthdate: yyMmDdToIso(birthDate)!,
+        patientBirthdateYymmdd: birthDate,
+        program: String(data.program),
+        address: String(data.address),
+        preferredDate: String(data.date),
+        preferredTime: String(data.time),
+        message: data.message ? String(data.message) : undefined,
+      });
 
-    console.log("Phone consultation data:", {
-      ...rest,
-      patient_birthdate: yyMmDdToIso(birthDate),
-      patient_birthdate_yymmdd: birthDate,
-    });
-
-    resetForm();
-    onSuccess();
+      resetForm();
+      onSuccess();
+    } catch (error) {
+      setSubmitError(
+        error instanceof ApiError
+          ? error.message
+          : "신청 처리 중 오류가 발생했습니다.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleCancel = () => {
@@ -64,7 +86,7 @@ export default function ConsultationForm({
     <form
       ref={formRef}
       onSubmit={handleSubmit}
-      className="rounded-2xl bg-white p-6 shadow-[0_8px_32px_rgba(0,0,0,0.2)] md:p-8"
+      className="rounded-2xl bg-white p-6 text-text-dark shadow-[0_8px_32px_rgba(0,0,0,0.2)] md:p-8"
     >
       <h3 className="mb-6 text-center text-xl font-bold text-primary-navy">
         전화 상담 신청서
@@ -197,19 +219,27 @@ export default function ConsultationForm({
           />
         </FormGroup>
 
+        {submitError && (
+          <p className="text-sm text-red-600" role="alert">
+            {submitError}
+          </p>
+        )}
+
         <div className="flex gap-4">
           <button
             type="button"
             onClick={handleCancel}
-            className="min-h-[44px] flex-1 cursor-pointer rounded-lg bg-text-gray py-3 text-base font-semibold text-white transition-colors hover:bg-[#4B5563]"
+            disabled={isSubmitting}
+            className="min-h-[44px] flex-1 cursor-pointer rounded-lg bg-text-gray py-3 text-base font-semibold text-white transition-colors hover:bg-[#4B5563] disabled:cursor-not-allowed disabled:opacity-60"
           >
             취소
           </button>
           <button
             type="submit"
-            className="min-h-[44px] flex-1 cursor-pointer rounded-lg bg-primary-blue py-3 text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-navy hover:shadow-[0_4px_12px_rgba(95,168,211,0.3)]"
+            disabled={isSubmitting}
+            className="min-h-[44px] flex-1 cursor-pointer rounded-lg bg-primary-blue py-3 text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-navy hover:shadow-[0_4px_12px_rgba(95,168,211,0.3)] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            신청하기
+            {isSubmitting ? "전송 중…" : "신청하기"}
           </button>
         </div>
       </div>

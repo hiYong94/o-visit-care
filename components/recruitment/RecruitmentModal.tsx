@@ -8,21 +8,27 @@ import {
   selectClassName,
   textareaClassName,
 } from "@/components/ui/formStyles";
+import { ApiError } from "@/lib/api/client";
+import { submitRecruitment } from "@/lib/api/forms";
 import { validateYyMmDd, yyMmDdToIso } from "@/lib/birthDate";
 import { REGIONS } from "@/lib/constants";
 
 type RecruitmentModalProps = {
   open: boolean;
   onClose: () => void;
+  onSuccess: () => void;
 };
 
 export default function RecruitmentModal({
   open,
   onClose,
+  onSuccess,
 }: RecruitmentModalProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [birthDate, setBirthDate] = useState("");
   const [birthDateError, setBirthDateError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "auto";
@@ -35,13 +41,15 @@ export default function RecruitmentModal({
     if (!open) {
       setBirthDate("");
       setBirthDateError(null);
+      setSubmitError(null);
     }
   }, [open]);
 
   if (!open) return null;
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitError(null);
 
     const birthError = validateYyMmDd(birthDate);
     if (birthError) {
@@ -50,31 +58,43 @@ export default function RecruitmentModal({
     }
 
     const form = e.currentTarget;
-    const data = {
-      name: (form.elements.namedItem("applicantName") as HTMLInputElement).value,
-      birthDate: yyMmDdToIso(birthDate),
-      birthDateYyMmDd: birthDate,
-      gender: (form.elements.namedItem("gender") as HTMLSelectElement).value,
-      region: (form.elements.namedItem("region") as HTMLSelectElement).value,
-      preferredLocation: (
-        form.elements.namedItem("preferredLocation") as HTMLInputElement
-      ).value,
-      phone: (form.elements.namedItem("applicantPhone") as HTMLInputElement)
-        .value,
-      experience: (form.elements.namedItem("experience") as HTMLTextAreaElement)
-        .value,
-      certifications: (
-        form.elements.namedItem("certifications") as HTMLTextAreaElement
-      ).value,
-    };
-    console.log("전문가 지원 데이터:", data);
-    alert(
-      "지원서가 접수되었습니다.\n담당자가 검토 후 연락드리겠습니다.\n감사합니다.",
-    );
-    formRef.current?.reset();
-    setBirthDate("");
-    setBirthDateError(null);
-    onClose();
+
+    setIsSubmitting(true);
+    try {
+      await submitRecruitment({
+        name: (form.elements.namedItem("applicantName") as HTMLInputElement)
+          .value,
+        birthDate: yyMmDdToIso(birthDate)!,
+        birthDateYymmdd: birthDate,
+        gender: (form.elements.namedItem("gender") as HTMLSelectElement).value,
+        region: (form.elements.namedItem("region") as HTMLSelectElement).value,
+        preferredLocation: (
+          form.elements.namedItem("preferredLocation") as HTMLInputElement
+        ).value,
+        phone: (form.elements.namedItem("applicantPhone") as HTMLInputElement)
+          .value,
+        experience: (
+          form.elements.namedItem("experience") as HTMLTextAreaElement
+        ).value,
+        certifications: (
+          form.elements.namedItem("certifications") as HTMLTextAreaElement
+        ).value,
+      });
+
+      formRef.current?.reset();
+      setBirthDate("");
+      setBirthDateError(null);
+      onClose();
+      onSuccess();
+    } catch (error) {
+      setSubmitError(
+        error instanceof ApiError
+          ? error.message
+          : "지원서 제출 중 오류가 발생했습니다.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -108,7 +128,7 @@ export default function RecruitmentModal({
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="flex flex-col gap-3"
+          className="flex flex-col gap-3 text-text-dark"
         >
           <FormGroup label="성함" htmlFor="applicantName" required>
             <input
@@ -209,12 +229,18 @@ export default function RecruitmentModal({
             />
           </FormGroup>
 
-          <div className="mt-4 flex justify-center">
+          <div className="mt-4 flex flex-col items-center gap-3">
+            {submitError && (
+              <p className="text-sm text-red-600" role="alert">
+                {submitError}
+              </p>
+            )}
             <button
               type="submit"
-              className="min-h-[44px] cursor-pointer rounded-lg bg-accent-green px-10 py-3 text-lg font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent-green-dark hover:shadow-[0_4px_12px_rgba(107,144,128,0.3)]"
+              disabled={isSubmitting}
+              className="min-h-[44px] cursor-pointer rounded-lg bg-accent-green px-10 py-3 text-lg font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent-green-dark hover:shadow-[0_4px_12px_rgba(107,144,128,0.3)] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              지원서 제출
+              {isSubmitting ? "전송 중…" : "지원서 제출"}
             </button>
           </div>
         </form>

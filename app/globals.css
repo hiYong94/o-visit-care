@@ -45,3 +45,18 @@ body {
 .animate-slide-down {
   animation: slide-down 0.3s ease;
 }
+
+/* 흰색 텍스트가 상속된 섹션(상담 신청) 안에서도 입력값·자동완성 글자색 유지 */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  -webkit-text-fill-color: var(--text-dark);
+  caret-color: var(--text-dark);
+}
