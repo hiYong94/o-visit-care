@@ -11,14 +11,14 @@ export const MEDICAL_DISCLAIMER = [
 export const PROGRAMS = [
   {
     icon: "🧠",
-    title: "뇌질환 재활",
+    title: "뇌질환 재활 운동",
     description:
-      "뇌졸중, 뇌경색, 뇌출혈 등 뇌질환 환자를 위한 전문 재활 프로그램",
+      "뇌졸중, 뇌경색, 뇌출혈 등 뇌질환 환자를 위한 전문 재활 운동 프로그램",
     value: "brain",
   },
   {
     icon: "🦴",
-    title: "척추·관절 재활",
+    title: "척추·관절 재활 운동",
     description: "허리디스크, 척추협착증, 인공관절 수술 후 재활운동",
     value: "spine",
   },
@@ -30,19 +30,19 @@ export const PROGRAMS = [
   },
   {
     icon: "🍽️",
-    title: "연하장애 재활",
-    description: "삼킴 장애 개선을 위한 전문 연하재활 치료",
+    title: "연하장애 재활 운동",
+    description: "삼킴 장애 개선을 위한 전문 연하재활 운동 치료",
     value: "swallowing",
   },
   {
     icon: "👶",
-    title: "소아 재활",
-    description: "사경, 발달지연, 뇌손상 아동을 위한 맞춤 재활",
+    title: "소아 재활 운동",
+    description: "사경, 발달지연, 뇌손상 아동을 위한 맞춤 재활 운동",
     value: "pediatric",
   },
   {
     icon: "🎯",
-    title: "맞춤형 케어",
+    title: "맞춤형 케어 운동",
     description: "개인의 상태와 목표에 맞춘 1:1 재활 운동 설계",
     value: "custom",
   },

@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="mb-8 flex flex-wrap justify-around gap-6">
           <div>
             <h4 className="mb-2 text-primary-blue">{SITE_NAME}</h4>
-            <p className="opacity-80">사업자등록번호: 000-00-00000</p>
+            <p className="opacity-80">사업자등록번호: 883-29-01201</p>
             <p className="opacity-80">대표자명: 함상민</p>
           </div>
         </div>
