@@ -48,6 +48,14 @@ export const PROGRAMS = [
   },
 ] as const;
 
+export const CONSULTATION_PROGRAM_OPTIONS = [
+  ...PROGRAMS,
+  {
+    title: "기타",
+    value: "other",
+  },
+] as const;
+
 export const PROCESS_STEPS = [
   {
     step: 1,

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { yyMmDdToIso } from "@/lib/birthDate";
+import { isValidPhone } from "@/lib/phone";
 import { notifyRecruitmentApplication } from "@/lib/slack/service";
 import { SlackApiError } from "@/lib/slack/client";
 import type { RecruitmentPayload } from "@/lib/types/forms";
@@ -25,7 +26,7 @@ function parseBody(body: unknown): RecruitmentPayload | null {
   }
 
   const isoBirthdate = yyMmDdToIso(data.birthDateYymmdd);
-  if (!isoBirthdate) return null;
+  if (!isoBirthdate || !isValidPhone(data.phone)) return null;
 
   return {
     name: data.name.trim(),

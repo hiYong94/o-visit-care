@@ -4,6 +4,7 @@ import { type FormEvent, useRef, useState } from "react";
 import FormGroup from "@/components/ui/FormGroup";
 import FormRow from "@/components/ui/FormRow";
 import BirthDateInput from "@/components/ui/BirthDateInput";
+import PhoneInput from "@/components/ui/PhoneInput";
 import {
   inputClassName,
   selectClassName,
@@ -11,7 +12,9 @@ import {
 } from "@/components/ui/formStyles";
 import { submitConsultation } from "@/lib/api/forms";
 import { validateYyMmDd, yyMmDdToIso } from "@/lib/birthDate";
-import { CALL_TIME_OPTIONS, PROGRAMS } from "@/lib/constants";
+import { CALL_TIME_OPTIONS, CONSULTATION_PROGRAM_OPTIONS } from "@/lib/constants";
+import { validatePreferredDate, getTodayDateString } from "@/lib/date";
+import { validatePhone } from "@/lib/phone";
 import { ApiError } from "@/lib/api/client";
 
 type ConsultationFormProps = {
@@ -25,14 +28,21 @@ export default function ConsultationForm({
 }: ConsultationFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [birthDate, setBirthDate] = useState("");
+  const [phone, setPhone] = useState("");
   const [birthDateError, setBirthDateError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [dateError, setDateError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const minPreferredDate = getTodayDateString();
 
   const resetForm = () => {
     formRef.current?.reset();
     setBirthDate("");
+    setPhone("");
     setBirthDateError(null);
+    setPhoneError(null);
+    setDateError(null);
     setSubmitError(null);
   };
 
@@ -49,17 +59,30 @@ export default function ConsultationForm({
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
 
+    const phoneValidationError = validatePhone(phone);
+    if (phoneValidationError) {
+      setPhoneError(phoneValidationError);
+      return;
+    }
+
+    const preferredDate = String(data.date);
+    const dateValidationError = validatePreferredDate(preferredDate);
+    if (dateValidationError) {
+      setDateError(dateValidationError);
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       await submitConsultation({
         name: String(data.name),
-        phone: String(data.phone),
+        phone,
         patientGender: String(data.patient_gender),
         patientBirthdate: yyMmDdToIso(birthDate)!,
         patientBirthdateYymmdd: birthDate,
         program: String(data.program),
         address: String(data.address),
-        preferredDate: String(data.date),
+        preferredDate,
         preferredTime: String(data.time),
         message: data.message ? String(data.message) : undefined,
       });
@@ -105,13 +128,16 @@ export default function ConsultationForm({
             />
           </FormGroup>
           <FormGroup label="보호자 연락처" htmlFor="phone_contact" required>
-            <input
+            <PhoneInput
               id="phone_contact"
               name="phone"
-              type="tel"
-              placeholder="010-0000-0000"
+              value={phone}
               required
-              className={inputClassName}
+              error={phoneError}
+              onChange={(value) => {
+                setPhone(value);
+                if (phoneError) setPhoneError(null);
+              }}
             />
           </FormGroup>
         </FormRow>
@@ -159,7 +185,7 @@ export default function ConsultationForm({
             <option value="" disabled>
               관심 프로그램을 선택해주세요
             </option>
-            {PROGRAMS.map((program) => (
+            {CONSULTATION_PROGRAM_OPTIONS.map((program) => (
               <option key={program.value} value={program.value}>
                 {program.title}
               </option>
@@ -185,9 +211,20 @@ export default function ConsultationForm({
               name="date"
               type="date"
               required
-              className={inputClassName}
+              min={minPreferredDate}
+              className={`${inputClassName}${dateError ? " border-red-500 focus:border-red-500" : ""}`}
               aria-label="희망 통화 날짜"
+              aria-invalid={!!dateError}
+              aria-describedby={dateError ? "phone_date-error" : undefined}
+              onChange={() => {
+                if (dateError) setDateError(null);
+              }}
             />
+            {dateError && (
+              <p id="phone_date-error" className="text-sm text-red-600" role="alert">
+                {dateError}
+              </p>
+            )}
           </FormGroup>
           <FormGroup label="희망 통화 시간" htmlFor="phone_time" required>
             <select

@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import { yyMmDdToIso } from "@/lib/birthDate";
+import { CONSULTATION_PROGRAM_OPTIONS } from "@/lib/constants";
+import { isValidPhone } from "@/lib/phone";
+import { isDateOnOrAfterToday } from "@/lib/date";
 import { notifyConsultationRequest } from "@/lib/slack/service";
 import { SlackApiError } from "@/lib/slack/client";
 import type { ConsultationPayload } from "@/lib/types/forms";
@@ -29,15 +32,24 @@ function parseBody(body: unknown): ConsultationPayload | null {
   const isoBirthdate = yyMmDdToIso(data.patientBirthdateYymmdd);
   if (!isoBirthdate) return null;
 
+  const program = data.program.trim();
+  const isValidProgram = CONSULTATION_PROGRAM_OPTIONS.some(
+    (option) => option.value === program,
+  );
+  if (!isValidProgram || !isValidPhone(data.phone)) return null;
+
+  const preferredDate = data.preferredDate.trim();
+  if (!isDateOnOrAfterToday(preferredDate)) return null;
+
   return {
     name: data.name.trim(),
     phone: data.phone.trim(),
     patientGender: data.patientGender.trim(),
     patientBirthdate: isoBirthdate,
     patientBirthdateYymmdd: data.patientBirthdateYymmdd.trim(),
-    program: data.program.trim(),
+    program,
     address: data.address.trim(),
-    preferredDate: data.preferredDate.trim(),
+    preferredDate,
     preferredTime: data.preferredTime.trim(),
     message: isNonEmptyString(data.message) ? data.message.trim() : undefined,
   };

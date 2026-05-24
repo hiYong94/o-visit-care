@@ -3,6 +3,7 @@
 import { type FormEvent, useEffect, useRef, useState } from "react";
 import FormGroup from "@/components/ui/FormGroup";
 import BirthDateInput from "@/components/ui/BirthDateInput";
+import PhoneInput from "@/components/ui/PhoneInput";
 import {
   inputClassName,
   selectClassName,
@@ -11,6 +12,7 @@ import {
 import { ApiError } from "@/lib/api/client";
 import { submitRecruitment } from "@/lib/api/forms";
 import { validateYyMmDd, yyMmDdToIso } from "@/lib/birthDate";
+import { validatePhone } from "@/lib/phone";
 import { REGIONS } from "@/lib/constants";
 
 type RecruitmentModalProps = {
@@ -26,7 +28,9 @@ export default function RecruitmentModal({
 }: RecruitmentModalProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [birthDate, setBirthDate] = useState("");
+  const [phone, setPhone] = useState("");
   const [birthDateError, setBirthDateError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,7 +44,9 @@ export default function RecruitmentModal({
   useEffect(() => {
     if (!open) {
       setBirthDate("");
+      setPhone("");
       setBirthDateError(null);
+      setPhoneError(null);
       setSubmitError(null);
     }
   }, [open]);
@@ -59,6 +65,12 @@ export default function RecruitmentModal({
 
     const form = e.currentTarget;
 
+    const phoneValidationError = validatePhone(phone);
+    if (phoneValidationError) {
+      setPhoneError(phoneValidationError);
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       await submitRecruitment({
@@ -71,8 +83,7 @@ export default function RecruitmentModal({
         preferredLocation: (
           form.elements.namedItem("preferredLocation") as HTMLInputElement
         ).value,
-        phone: (form.elements.namedItem("applicantPhone") as HTMLInputElement)
-          .value,
+        phone,
         experience: (
           form.elements.namedItem("experience") as HTMLTextAreaElement
         ).value,
@@ -83,6 +94,7 @@ export default function RecruitmentModal({
 
       formRef.current?.reset();
       setBirthDate("");
+      setPhone("");
       setBirthDateError(null);
       onClose();
       onSuccess();
@@ -192,20 +204,23 @@ export default function RecruitmentModal({
               id="preferredLocation"
               name="preferredLocation"
               type="text"
-              placeholder="예: 서울시 강남구"
+              placeholder="예: 서울시 강남구, 성남시 분당구 (여러 곳 입력 가능)"
               required
               className={inputClassName}
             />
           </FormGroup>
 
           <FormGroup label="연락처" htmlFor="applicantPhone" required>
-            <input
+            <PhoneInput
               id="applicantPhone"
               name="applicantPhone"
-              type="tel"
-              placeholder="010-0000-0000"
+              value={phone}
               required
-              className={inputClassName}
+              error={phoneError}
+              onChange={(value) => {
+                setPhone(value);
+                if (phoneError) setPhoneError(null);
+              }}
             />
           </FormGroup>
 

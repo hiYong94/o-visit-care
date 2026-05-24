@@ -1,8 +1,10 @@
-import { CALL_TIME_OPTIONS, PROGRAMS } from "@/lib/constants";
+import { CALL_TIME_OPTIONS, CONSULTATION_PROGRAM_OPTIONS } from "@/lib/constants";
 import type { ConsultationPayload } from "@/lib/types/forms";
 
 function programLabel(value: string) {
-  return PROGRAMS.find((p) => p.value === value)?.title ?? value;
+  return (
+    CONSULTATION_PROGRAM_OPTIONS.find((p) => p.value === value)?.title ?? value
+  );
 }
 
 function timeLabel(value: string) {
