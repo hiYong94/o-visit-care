@@ -1,0 +1,53 @@
+---
+description: 오뚜기방문재활운동센터 프로젝트 컨텍스트 — 브랜딩, 기능, 콘텐츠 원칙
+alwaysApply: true
+---
+
+# 프로젝트 컨텍스트
+
+상세 명세: `docs/CURSOR_RULES.md` · UI 프로토타입(초기): `docs/reference/index.html`
+
+**구현 기준**: HTML 프로토타입은 참고용. 실제 동작·스타일은 `components/` 및 `lib/` 코드가 우선.
+
+## 기술 스택
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · npm
+
+## 브랜드
+- **한국어**: 오뚜기방문재활운동센터
+- **영문**: O Visit Care
+- 원장(함상민) 1인 직접 재활 · 창업 초기 · 과장·더미 콘텐츠 금지
+- 연락처·카카오 링크 등 런타임 값: `lib/constants.ts`
+
+## 페이지 섹션 (순서)
+Hero → 프로그램(6) → 대표원장 → 이용절차(3단계) → 전문가 모집 배너 → 상담 신청
+
+## GNB
+프로그램 · 대표원장 · 이용절차 · 전문가 지원(녹색, 모달) · 상담 신청(CTA)
+
+## 운영 시간
+- 전화: 평일 10:00–20:00
+- 카카오톡: 평일 09:00–20:00 · 주말 10:00–20:00
+
+## 핵심 기능
+1. **전화 상담 폼** (`ConsultationForm`) — 보호자/돌봄대상자 구분, 생년월일 YYMMDD
+2. **전문가 지원 모달** (`RecruitmentModal`) — max-w **874px**, X로만 닫기, 생년월일 YYMMDD
+3. 폼 제출: `console.log` → 확인 모달/alert → 리셋 (백엔드 연동 전)
+
+## 생년월일 (YYMMDD)
+- 공통: `BirthDateInput` + `lib/birthDate.ts`
+- 6자리 숫자 · placeholder `예: 550315 (YYMMDD)`
+- 세기: `40~99`→19XX · `00~39`→20XX · 범위 1940~현재
+- 제출: `patient_birthdate_yymmdd` + ISO `patient_birthdate`
+
+## 반응형
+- md↑: 로고 이미지(80px) + 가로 메뉴 (로고에 센터명 포함 → 별도 텍스트 없음)
+- md↓: 로고만(50px), 가로 스크롤 메뉴, **햄버거 금지**
+
+## 브랜드 에셋
+- 로고·파비콘: `public/assets/o-visit-care-logo.png` · `app/icon.png`
+
+## 금지
+검증 안 된 통계·수치, 미제공 서비스, AI 슬롭(과도한 그라데이션·장식 SVG·불필요 이모지·Inter/Roboto 등)
+
+## 주요 컴포넌트
+`home/HomePageClient` · `layout/` · `sections/` · `booking/` · `recruitment/` · `ui/`

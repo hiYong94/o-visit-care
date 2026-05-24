@@ -1,0 +1,55 @@
+---
+description: 오뚜기방문재활운동센터 디자인 시스템 — 색상, 타이포, 컴포넌트 스타일
+globs: "**/*.{tsx,css}"
+alwaysApply: false
+---
+
+# 디자인 시스템
+
+상세: `docs/DESIGN_SYSTEM.md` · CSS 변수: `app/globals.css`
+
+## 색상 (@theme / CSS 변수)
+- Primary Blue `#5FA8D3` — CTA, 링크
+- Dark Navy `#2B3A4A` — 제목, Footer, Booking 배경
+- Accent Green `#6B9080` — 전문가 모집
+- Accent Green Dark `#5a7e6f` — Recruitment hover
+- Neutral: lightBg `#F8F9FA`, borderLight `#E9ECEF`, textGray `#6C757D`
+
+## 타이포
+- Noto Sans KR (`app/layout.tsx`)
+- `text-wrap: pretty` 권장
+
+## 버튼 (현재 구현)
+```tsx
+// Primary CTA
+"bg-primary-blue ... hover:bg-primary-navy hover:-translate-y-0.5"
+// Recruitment submit
+"bg-accent-green ... hover:bg-accent-green-dark"
+// Kakao
+"bg-[#FEE500] text-[#3C1E1E]"
+```
+
+## 폼
+- 스타일: `components/ui/formStyles.ts` (`inputClassName`, `selectClassName`, `textareaClassName`)
+- input: `border-2 border-border-light rounded-lg px-4 py-3`
+- focus: `focus:border-primary-blue`
+
+## 카드·모달
+- Program Card: `rounded-xl shadow hover:-translate-y-1 hover:border-primary-blue`
+- Recruitment Modal: `max-w-[874px] w-[95%] max-h-[90vh] rounded-2xl`
+- Confirm Modal: `max-w-[500px]`
+- Overlay: `fixed inset-0 bg-black/60 z-[2000]`
+
+## 섹션 배경 (구현 기준)
+- Hero: `bg-linear-to-br from-[#F0F7FA] to-[#E8F4F8]`
+- Booking: `bg-linear-to-br from-primary-navy to-[#1A2832]`
+- Recruitment Banner: `bg-linear-to-br from-accent-green to-accent-green-dark`
+
+## 레이아웃
+- Container: `max-w-[1200px] mx-auto px-6` (대부분 섹션)
+- Booking inner: `max-w-[1000px]`
+- Grid: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6`
+- 터치 영역 최소 44px (`min-h-[44px]`)
+
+## 애니메이션
+- `animate-slide-down` — 상담 폼 펼침 (`app/globals.css`)

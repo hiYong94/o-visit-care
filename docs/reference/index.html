@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오뚜기방문재활운동센터 - 재활, 집에서 편안하게</title>
+    <meta name="description" content="오뚜기방문재활운동센터 - 전문 재활운동 서비스가 당신의 집으로 찾아갑니다">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="apple-touch-icon" href="assets/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Tertiary Set - Simplified Accessibility */
+            --primary-blue: #5FA8D3;
+            --accent-green: #6B9080;
+            --dark-navy: #2B3A4A;
+            --light-bg: #F8F9FA;
+            --white: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-gray: #6B7280;
+            --border-light: #E5E7EB;
+            
+            /* Spacing */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+            --spacing-2xl: 4rem;
+            --spacing-3xl: 6rem;
+            
+            /* Typography */
+            --font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-md) var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-lg);
+        }
+        
+        .mobile-menu-toggle {
+            display: none;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            text-decoration: none;
+        }
+        
+        .logo img {
+            height: 80px;
+            width: auto;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            letter-spacing: -0.02em;
+        }
+        
+        /* Logo enhancement - add subtle background on scroll */
+        header.scrolled .logo img {
+            filter: drop-shadow(0 2px 8px rgba(95, 168, 211, 0.2));
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--primary-blue);
+        }
+        
+        .cta-button {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background: var(--dark-navy);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(95, 168, 211, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            margin-top: 70px;
+            background: linear-gradient(135deg, #F0F7FA 0%, #E8F4F8 100%);
+            padding: var(--spacing-3xl) var(--spacing-lg);
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.2;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-gray);
+            margin-bottom: var(--spacing-xl);
+            font-weight: 400;
+        }
+        
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+        
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+        
+        .hero-feature::before {
+            content: '✓';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--accent-green);
+            color: var(--white);
+            border-radius: 50%;
+            font-weight: 700;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: var(--spacing-3xl) var(--spacing-lg);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+        }
+        
+        /* Programs Section */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .program-card {
+            background: var(--white);
+            padding: var(--spacing-xl);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .program-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            border-color: var(--primary-blue);
+        }
+        
+        .program-card h3 {
+            font-size: 1.5rem;
+            color: var(--dark-navy);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .program-card p {
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+        
+        .program-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-green));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        /* Process Section */
+        .process {
+            background: var(--light-bg);
+        }
+        
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto var(--spacing-md);
+        }
+        
+        .process-step h3 {
+            font-size: 1.3rem;
+            color: var(--dark-navy);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .process-step p {
+            color: var(--text-gray);
+        }
+        
+        /* Recruitment Banner */
+        .recruitment-banner {
+            background: linear-gradient(135deg, #6B9080 0%, #5a7e6f 100%);
+            color: var(--white);
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .recruitment-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-lg);
+        }
+        
+        .recruitment-text h2 {
+            font-size: 1.8rem;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .recruitment-text p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .btn-recruitment {
+            background: var(--white);
+            color: #6B9080;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+        
+        .btn-recruitment:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Recruitment Modal */
+        .recruitment-modal-content {
+            max-width: 1560px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .recruitment-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        
+        .recruitment-form .form-group {
+            width: 100%;
+            margin-bottom: 0;
+        }
+        
+        .recruitment-form .form-group label {
+            margin-bottom: 0.25rem;
+        }
+        
+        .recruitment-form .form-row {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        
+        .recruitment-form .form-actions {
+            margin-top: var(--spacing-md);
+            display: flex;
+            justify-content: center;
+        }
+        
+        .recruitment-form .btn-submit {
+            background: var(--accent-green);
+            color: var(--white);
+            padding: 0.875rem 2.5rem;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        
+        .recruitment-form .btn-submit:hover {
+            background: #5a7e6f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(107, 144, 128, 0.3);
+        }
+        
+        /* Booking Section */
+        .booking {
+            background: linear-gradient(135deg, var(--dark-navy) 0%, #1A2832 100%);
+            color: var(--white);
+        }
+        
+        .booking-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .booking h2 {
+            color: var(--white);
+            text-align: center;
+            margin-bottom: var(--spacing-md);
+            font-size: 2.5rem;
+        }
+        
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .contact-card {
+            background: var(--white);
+            padding: var(--spacing-xl);
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .contact-icon {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .contact-card h3 {
+            color: var(--dark-navy);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .contact-time {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .contact-desc {
+            color: var(--text-gray);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+        
+        .contact-button {
+            display: inline-block;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .phone-button {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+        
+        .phone-button:hover {
+            background: var(--dark-navy);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(95, 168, 211, 0.3);
+        }
+        
+        .kakao-button {
+            background: #FEE500;
+            color: #3C1E1E;
+        }
+        
+        .kakao-button:hover {
+            background: #FDD800;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(254, 229, 0, 0.4);
+        }
+        
+        .quick-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: var(--spacing-lg);
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .quick-info h3 {
+            color: var(--white);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.3rem;
+        }
+        
+        .quick-info p {
+            color: var(--white);
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+        
+        /* Consultation Form */
+        .consultation-form-wrapper {
+            margin-top: var(--spacing-xl);
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .consultation-form {
+            background: var(--white);
+            padding: var(--spacing-xl);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .form-group label {
+            display: block;
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 2px solid var(--border-light);
+            border-radius: 8px;
+            font-family: var(--font-family);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+        }
+        
+        .form-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .form-button {
+            flex: 1;
+            padding: var(--spacing-md);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cancel-button {
+            background: var(--text-gray);
+            color: var(--white);
+        }
+        
+        .cancel-button:hover {
+            background: #4B5563;
+        }
+        
+        .submit-button {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+        
+        .submit-button:hover {
+            background: var(--dark-navy);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(95, 168, 211, 0.3);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--white);
+            padding: var(--spacing-xl);
+            border-radius: 16px;
+            max-width: 500px;
+            margin: var(--spacing-lg);
+            text-align: center;
+        }
+        
+        .modal#recruitmentModal {
+            display: none;
+        }
+        
+        .modal#recruitmentModal.active {
+            display: flex;
+        }
+        
+        .modal-content h3 {
+            color: var(--dark-navy);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.8rem;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+        }
+        
+        .modal-header h2 {
+            flex: 1;
+        }
+        
+        .close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-gray);
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            line-height: 1;
+            transition: color var(--transition);
+        }
+        
+        .close:hover {
+            color: var(--dark-navy);
+        }
+        
+        .modal-content p {
+            color: var(--text-gray);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.8;
+        }
+        
+        .modal-button {
+            padding: var(--spacing-sm) var(--spacing-xl);
+            background: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-button:hover {
+            background: var(--dark-navy);
+        }
+        
+        /* Stats Section */
+        .stats {
+            background: var(--accent-green);
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-xl);
+        }
+        
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .stat-item p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* Director Section */
+        .director-profile {
+            background: var(--white);
+            border-radius: 16px;
+            padding: var(--spacing-xl);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+        
+        .director-header {
+            display: flex;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            align-items: flex-start;
+        }
+        
+        .director-text h3 {
+            font-size: 2rem;
+            color: var(--dark-navy);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .director-title {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .director-specialties {
+            margin-top: var(--spacing-md);
+        }
+        
+        .director-specialties p {
+            color: var(--text-dark);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        
+        .credentials-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+            padding-top: var(--spacing-xl);
+            border-top: 2px solid var(--border-light);
+        }
+        
+        .credentials-column h4 {
+            font-size: 1.3rem;
+            color: var(--dark-navy);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 2px solid var(--primary-blue);
+        }
+        
+        .credentials-column ul {
+            list-style: none;
+        }
+        
+        .credentials-column li {
+            color: var(--text-dark);
+            line-height: 2;
+            padding-left: var(--spacing-md);
+            position: relative;
+        }
+        
+        .credentials-column li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+        
+        /* Recruitment Banner */
+        .recruitment-banner {
+            background: linear-gradient(135deg, #6B9080 0%, #5a7e6f 100%);
+            color: var(--white);
+            padding: var(--spacing-xl) 0;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-navy);
+            color: var(--white);
+            padding: var(--spacing-xl) var(--spacing-lg);
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .footer-section h4 {
+            margin-bottom: var(--spacing-sm);
+            color: var(--primary-blue);
+        }
+        
+        .footer-section p {
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo-text {
+                display: none;
+            }
+            
+            .logo img {
+                height: 50px;
+            }
+            
+            nav {
+                padding: var(--spacing-sm) var(--spacing-md);
+                gap: var(--spacing-sm);
+            }
+            
+            .nav-menu {
+                overflow-x: auto;
+                overflow-y: hidden;
+                white-space: nowrap;
+                gap: 0;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            
+            .nav-menu::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .nav-menu li {
+                display: inline-block;
+                margin: 0;
+            }
+            
+            .nav-menu a {
+                display: inline-block;
+                padding: var(--spacing-xs) var(--spacing-sm);
+                font-size: 0.9rem;
+                white-space: nowrap;
+            }
+            
+            .mobile-menu-toggle {
+                display: none;
+            }
+            
+            .cta-button {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+                white-space: nowrap;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .hero-features {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .director-header {
+                flex-direction: column;
+            }
+            
+            .contact-methods {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-icon {
+                font-size: 3rem;
+            }
+            
+            .contact-time {
+                font-size: 1.1rem;
+            }
+            
+            .recruitment-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .recruitment-text h2 {
+                font-size: 1.4rem;
+            }
+            
+            .recruitment-form .form-row {
+                flex-direction: column;
+            }
+            
+            .recruitment-modal-content {
+                max-width: 95%;
+                width: 95%;
+                padding: var(--spacing-md);
+            }
+            
+            .programs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .credentials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .booking h2 {
+                font-size: 2rem;
+            }
+            
+            .contact-card h3 {
+                font-size: 1.3rem;
+            }
+            
+            .contact-desc {
+                font-size: 0.95rem;
+            }
+            
+            .consultation-form {
+                padding: var(--spacing-md);
+            }
+            
+            .modal-content {
+                max-width: 95%;
+                margin: var(--spacing-sm);
+            }
+            
+            .cta-button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+            
+            .section-title p {
+                font-size: 0.95rem;
+            }
+            
+            .program-card h3 {
+                font-size: 1.2rem;
+            }
+            
+            .director-profile h2 {
+                font-size: 1.8rem;
+            }
+            
+            .contact-icon {
+                font-size: 2.5rem;
+            }
+            
+            .recruitment-text h2 {
+                font-size: 1.2rem;
+            }
+            
+            .recruitment-text p {
+                font-size: 0.95rem;
+            }
+            
+            .btn-recruitment {
+                font-size: 0.95rem;
+                padding: 0.8rem 1.5rem;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#" class="logo">
+                <img src="assets/logo.png" alt="오뚜기방문재활운동센터">
+                <span class="logo-text">오뚜기방문재활운동센터</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#programs">프로그램</a></li>
+                <li><a href="#about">대표원장</a></li>
+                <li><a href="#process">이용절차</a></li>
+                <li><a href="javascript:void(0)" onclick="openRecruitmentForm()" style="color: var(--accent-green); font-weight: 600;">전문가 지원</a></li>
+            </ul>
+            <a href="#booking" class="cta-button">상담 신청</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>재활, 집에서 편안하게</h1>
+            <p class="subtitle">전문 재활운동 서비스가 당신의 집으로 찾아갑니다</p>
+            <a href="#booking" class="cta-button" style="display: inline-block; margin-top: 1rem;">무료 상담 신청</a>
+            
+            <div class="hero-features">
+                <div class="hero-feature">1:1 맞춤 재활 프로그램</div>
+                <div class="hero-feature">전문 물리치료사 방문</div>
+                <div class="hero-feature">편안한 집에서 진행</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section id="programs">
+        <div class="container">
+            <div class="section-title">
+                <h2>재활 프로그램</h2>
+                <p>개인별 맞춤 솔루션을 제공합니다</p>
+            </div>
+            
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-icon">🧠</div>
+                    <h3>뇌질환 재활</h3>
+                    <p>뇌졸중, 뇌경색, 뇌출혈 등 뇌질환 환자를 위한 전문 재활 프로그램</p>
+                </div>
+                
+                <div class="program-card">
+                    <div class="program-icon">🦴</div>
+                    <h3>척추·관절 재활</h3>
+                    <p>허리디스크, 척추협착증, 인공관절 수술 후 재활운동</p>
+                </div>
+                
+                <div class="program-card">
+                    <div class="program-icon">💪</div>
+                    <h3>근력 강화 운동</h3>
+                    <p>노인 근감소증 예방 및 일상생활 기능 회복 프로그램</p>
+                </div>
+                
+                <div class="program-card">
+                    <div class="program-icon">🍽️</div>
+                    <h3>연하장애 재활</h3>
+                    <p>삼킴 장애 개선을 위한 전문 연하재활 치료</p>
+                </div>
+                
+                <div class="program-card">
+                    <div class="program-icon">👶</div>
+                    <h3>소아 재활</h3>
+                    <p>사경, 발달지연, 뇌손상 아동을 위한 맞춤 재활</p>
+                </div>
+                
+                <div class="program-card">
+                    <div class="program-icon">🎯</div>
+                    <h3>맞춤형 케어</h3>
+                    <p>개인의 상태와 목표에 맞춘 1:1 재활 운동 설계</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Director Section -->
+    <section id="about" style="background: var(--light-bg);">
+        <div class="container">
+            <div class="section-title">
+                <h2>대표원장 소개</h2>
+                <p>함상민 원장</p>
+            </div>
+            
+            <div class="director-profile">
+                <div class="director-info">
+                    <div class="director-header">
+                        <div class="director-text">
+                            <h3>함상민</h3>
+                            <p class="director-title">원장</p>
+                            <div class="director-specialties">
+                                <p>▪ 뇌질환 전문 재활</p>
+                                <p>▪ 뇌졸중/뇌출혈/파킨슨/혈관성 치매</p>
+                                <p>▪ 관절 척추 수술 후 재활</p>
+                                <p>▪ 선천성/희귀 난치성 질환 재활</p>
+                                <p>▪ 노인 활동 기능회복</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="credentials-grid">
+                        <div class="credentials-column">
+                            <h4>주요약력</h4>
+                            <ul>
+                                <li>과) 삼육대학원 물리치료학과 석사</li>
+                                <li>졸) 대전보건대 물리치료과</li>
+                                <li>현) 재활평가 분점 대표</li>
+                                <li>현) 국제재활운동필라테스협회장</li>
+                                <li>현) 오뚜기방문재활운동센터 대표</li>
+                                <li>전) 성화대전요양병원 운동치료팀장</li>
+                                <li>전) 청주바른신경외과 도수치료팀장</li>
+                                <li>전) 가천대 인천길병원 물리치료실</li>
+                                <li>전) 삼육재단장애인복지관 운동치료실장</li>
+                                <li>전) 강남더재활클리닉 원장</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="credentials-column">
+                            <h4>주요활동</h4>
+                            <ul>
+                                <li>대한물리치료사협회</li>
+                                <li>성인 한국Bobath 학회</li>
+                                <li>소아 한국Bobath 학회</li>
+                                <li>한국보이타협회 서울시회</li>
+                                <li>대한PNF학회</li>
+                                <li>대한심호흡물리치료학회</li>
+                                <li>대한전동물리치료학회</li>
+                                <li>한국치매협회</li>
+                                <li>KCI 대한카이로프랙틱학회</li>
+                                <li>국제카이로프랙틱협회</li>
+                                <li>중국 선전시 중의사대상 한국 추나 강의</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="process">
+        <div class="container">
+            <div class="section-title">
+                <h2>이용 절차</h2>
+                <p>간편한 3단계로 시작하세요</p>
+            </div>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3>상담 신청</h3>
+                    <p>전화 또는 카카오톡으로 상담을 신청합니다</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3>방문 평가</h3>
+                    <p>원장님이 직접 방문하여 돌봄대상자의 상태를 파악하고 대면 상담을 진행합니다</p>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3>재활 시작</h3>
+                    <p>원장님의 맞춤형 재활 프로그램으로 정기적인 방문 재활을 시작합니다</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recruitment Banner -->
+    <section class="recruitment-banner">
+        <div class="container">
+            <div class="recruitment-content">
+                <div class="recruitment-text">
+                    <h2>🏥 함께할 재활 전문가를 찾습니다</h2>
+                    <p>환자 중심의 가치를 함께 실현할 물리치료사, 작업치료사를 모집합니다</p>
+                </div>
+                <button class="btn-recruitment" onclick="openRecruitmentForm()">전문가 지원하기</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="booking">
+        <div class="booking-container">
+            <h2>상담 신청</h2>
+            <p style="text-align: center; color: var(--white); opacity: 0.9; margin-bottom: 2rem; font-size: 1.1rem;">
+                편하신 방법으로 상담을 신청해주세요
+            </p>
+            
+            <div class="contact-methods">
+                <div class="contact-card">
+                    <div class="contact-icon">📞</div>
+                    <h3>전화 상담 신청</h3>
+                    <p class="contact-time">평일 10:00 - 20:00</p>
+                    <p class="contact-desc">신청하시면 빠른 시일 내에 전화드립니다</p>
+                    <button class="contact-button phone-button" onclick="showPhoneForm()">전화 상담 신청</button>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon">💬</div>
+                    <h3>카카오톡 상담</h3>
+                    <p class="contact-time">평일 09:00 - 20:00 | 주말 10:00 - 20:00</p>
+                    <p class="contact-desc">편한 시간에 채팅으로 상담받으세요</p>
+                    <a href="https://open.kakao.com/o/your-openchat-link" target="_blank" class="contact-button kakao-button">카카오톡 상담하기</a>
+                </div>
+            </div>
+            
+            <!-- Phone Consultation Form (Hidden by default) -->
+            <div class="consultation-form-wrapper" id="phoneFormWrapper" style="display: none;">
+                <form class="consultation-form" id="phoneConsultationForm">
+                    <h3 style="text-align: center; color: var(--dark-navy); margin-bottom: 1.5rem;">전화 상담 신청서</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone_name">보호자 이름 *</label>
+                            <input type="text" id="phone_name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone_contact">보호자 연락처 *</label>
+                            <input type="tel" id="phone_contact" name="phone" placeholder="010-0000-0000" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patient_gender">돌봄대상자 성별 *</label>
+                            <select id="patient_gender" name="patient_gender" required>
+                                <option value="">선택해주세요</option>
+                                <option value="남성">남성</option>
+                                <option value="여성">여성</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="patient_birthdate">돌봄대상자 생년월일 *</label>
+                            <input type="date" id="patient_birthdate" name="patient_birthdate" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone_program">관심 프로그램 *</label>
+                        <select id="phone_program" name="program" required>
+                            <option value="">선택해주세요</option>
+                            <option value="brain">뇌질환 재활</option>
+                            <option value="spine">척추·관절 재활</option>
+                            <option value="strength">근력 강화 운동</option>
+                            <option value="swallowing">연하장애 재활</option>
+                            <option value="pediatric">소아 재활</option>
+                            <option value="custom">맞춤형 케어</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone_address">주소 (방문지역) *</label>
+                        <input type="text" id="phone_address" name="address" placeholder="예: 서울시 강남구" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone_date">희망 통화 날짜</label>
+                            <input type="date" id="phone_date" name="date">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone_time">희망 통화 시간</label>
+                            <select id="phone_time" name="time">
+                                <option value="">선택해주세요</option>
+                                <option value="morning">오전 (10:00-12:00)</option>
+                                <option value="afternoon">오후 (13:00-17:00)</option>
+                                <option value="evening">저녁 (17:00-20:00)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone_message">증상 및 문의사항</label>
+                        <textarea id="phone_message" name="message" rows="4" placeholder="증상이나 궁금한 점을 자유롭게 작성해주세요"></textarea>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <button type="button" class="form-button cancel-button" onclick="hidePhoneForm()">취소</button>
+                        <button type="submit" class="form-button submit-button">신청하기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Recruitment Modal -->
+    <div id="recruitmentModal" class="modal">
+        <div class="modal-content recruitment-modal-content">
+            <div class="modal-header">
+                <h2>전문가 지원</h2>
+                <span class="close" onclick="closeRecruitmentModal()">&times;</span>
+            </div>
+            
+            <form id="recruitmentForm" class="recruitment-form">
+                <div class="form-group">
+                    <label for="applicantName">성함 *</label>
+                    <input type="text" id="applicantName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="birthDate">생년월일 *</label>
+                    <input type="date" id="birthDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gender">성별 *</label>
+                    <select id="gender" required>
+                        <option value="">선택해주세요</option>
+                        <option value="남성">남성</option>
+                        <option value="여성">여성</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="region">권역 *</label>
+                    <select id="region" required>
+                        <option value="">선택해주세요</option>
+                        <option value="서울">서울</option>
+                        <option value="경기">경기</option>
+                        <option value="인천">인천</option>
+                        <option value="강원">강원</option>
+                        <option value="충북">충북</option>
+                        <option value="충남">충남</option>
+                        <option value="대전">대전</option>
+                        <option value="세종">세종</option>
+                        <option value="경북">경북</option>
+                        <option value="경남">경남</option>
+                        <option value="대구">대구</option>
+                        <option value="울산">울산</option>
+                        <option value="부산">부산</option>
+                        <option value="전북">전북</option>
+                        <option value="전남">전남</option>
+                        <option value="광주">광주</option>
+                        <option value="제주">제주</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="preferredLocation">희망 근무지 *</label>
+                    <input type="text" id="preferredLocation" placeholder="예: 서울시 강남구" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="applicantPhone">연락처 *</label>
+                    <input type="tel" id="applicantPhone" placeholder="010-0000-0000" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="experience">연차 및 경력</label>
+                    <textarea id="experience" rows="6" placeholder="예: 물리치료사 5년차, ○○병원 재활의학과 3년 근무"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="certifications">보유 자격증</label>
+                    <textarea id="certifications" rows="6" placeholder="예: 물리치료사 면허, 도수치료 자격증, 신경계물리치료 전문과정 수료"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">지원서 제출</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">✓</div>
+            <h3>상담 신청 완료</h3>
+            <p>상담 신청이 접수되었습니다.<br>빠른 시일 내에 연락드리겠습니다.</p>
+            <button class="modal-button" onclick="closeModal()">확인</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <div class="footer-section">
+                    <h4>오뚜기방문재활운동센터</h4>
+                    <p>사업자등록번호: 000-00-00000</p>
+                    <p>대표자명: 함상민</p>
+                </div>
+            </div>
+            
+            <p style="margin-top: 2rem; opacity: 0.7;">© 2026 오뚜기방문재활운동센터. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Show/Hide phone consultation form
+        function showPhoneForm() {
+            document.getElementById('phoneFormWrapper').style.display = 'block';
+            document.getElementById('phoneFormWrapper').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        function hidePhoneForm() {
+            document.getElementById('phoneFormWrapper').style.display = 'none';
+        }
+        
+        // Form submission
+        document.getElementById('phoneConsultationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+            
+            console.log('Phone consultation data:', data);
+            
+            // Hide form and show modal
+            hidePhoneForm();
+            document.getElementById('confirmModal').classList.add('active');
+            
+            // Reset form
+            this.reset();
+        });
+        
+        function closeModal() {
+            document.getElementById('confirmModal').classList.remove('active');
+        }
+        
+        // Recruitment form functions
+        function openRecruitmentForm() {
+            const modal = document.getElementById('recruitmentModal');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeRecruitmentModal() {
+            const modal = document.getElementById('recruitmentModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Recruitment form submission
+        document.getElementById('recruitmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('applicantName').value,
+                birthDate: document.getElementById('birthDate').value,
+                gender: document.getElementById('gender').value,
+                region: document.getElementById('region').value,
+                preferredLocation: document.getElementById('preferredLocation').value,
+                phone: document.getElementById('applicantPhone').value,
+                experience: document.getElementById('experience').value,
+                certifications: document.getElementById('certifications').value
+            };
+            
+            console.log('전문가 지원 데이터:', formData);
+            
+            // Show confirmation
+            alert('지원서가 접수되었습니다.\n담당자가 검토 후 연락드리겠습니다.\n감사합니다.');
+            
+            // Close modal and reset form
+            closeRecruitmentModal();
+            this.reset();
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            const recruitmentModal = document.getElementById('recruitmentModal');
+            const confirmModal = document.getElementById('confirmModal');
+            
+            // Prevent closing recruitment modal by clicking outside
+            // (removed to prevent data loss)
+            
+            if (e.target === confirmModal) {
+                closeModal();
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 70;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
