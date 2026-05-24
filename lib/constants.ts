@@ -1,7 +1,7 @@
 export const SITE_NAME = "오뚜기방문재활운동센터";
 export const PHONE = "010-7749-1655";
 export const EMAIL = "info@o-visit-care.com";
-export const KAKAO_LINK = "https://open.kakao.com/o/your-openchat-link";
+export const KAKAO_LINK = "https://open.kakao.com/o/sWGkiqwi";
 
 export const MEDICAL_DISCLAIMER = [
   "본 센터는 의료기관이 아니며, 진단·처방·치료를 제공하지 않습니다.",
