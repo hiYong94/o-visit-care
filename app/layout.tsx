@@ -18,10 +18,6 @@ export const metadata: Metadata = {
     "방문물리치료",
     "오뚜기방문재활운동센터",
   ],
-  icons: {
-    icon: "/favicon.png",
-    apple: "/favicon.png",
-  },
 };
 
 export default function RootLayout({
