@@ -8,6 +8,8 @@ export const MEDICAL_DISCLAIMER = [
   "의료기관에서 진단받으신 분들의 일상생활 회복과 건강증진을 위한 재활운동·훈련 서비스를 제공합니다.",
 ] as const;
 
+export const VISIT_ASSESSMENT_FREE_NOTE = "방문 평가는 무료로 진행됩니다.";
+
 export const PROGRAMS = [
   {
     icon: "🧠",
@@ -66,7 +68,7 @@ export const PROCESS_STEPS = [
     step: 2,
     title: "방문 평가",
     description:
-      "원장님이 직접 방문하여 돌봄대상자의 상태를 파악하고 대면 상담을 진행합니다",
+      "원장님이 직접 방문하여 돌봄대상자의 상태를 파악하고 대면 상담을 진행합니다. 방문 평가는 무료입니다.",
   },
   {
     step: 3,

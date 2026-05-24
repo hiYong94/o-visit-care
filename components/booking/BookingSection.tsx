@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import ConsultationForm from "@/components/booking/ConsultationForm";
 import ContactCard from "@/components/booking/ContactCard";
 import MedicalDisclaimer from "@/components/ui/MedicalDisclaimer";
-import { KAKAO_LINK } from "@/lib/constants";
+import { KAKAO_LINK, VISIT_ASSESSMENT_FREE_NOTE } from "@/lib/constants";
 
 type BookingSectionProps = {
   phoneFormOpen: boolean;
@@ -39,8 +39,11 @@ export default function BookingSection({
         <h2 className="mb-4 text-center text-[2rem] font-bold md:text-[2.5rem]">
           상담 신청
         </h2>
-        <p className="mb-8 text-center text-lg opacity-90">
+        <p className="mb-2 text-center text-lg opacity-90">
           편하신 방법으로 상담을 신청해주세요
+        </p>
+        <p className="mb-8 text-center text-base font-medium text-primary-blue">
+          {VISIT_ASSESSMENT_FREE_NOTE}
         </p>
 
         <div className="mb-8">
